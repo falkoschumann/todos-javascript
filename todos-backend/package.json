@@ -1,0 +1,19 @@
+{
+  "name": "todos-backend",
+  "version": "1.0.0",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "test": "TS_NODE_PROJECT=tsconfig_test.json mocha --require ts-node/register src/**/*.test.ts"
+  },
+  "dependencies": {
+    "todos-contract": "^1.0.0"
+  },
+  "devDependencies": {
+    "@types/chai": "^4.3.3",
+    "@types/mocha": "^9.1.1",
+    "chai": "^4.3.6",
+    "mocha": "^10.0.0",
+    "ts-node": "^10.9.1"
+  }
+}

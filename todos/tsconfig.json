@@ -1,0 +1,17 @@
+{
+  "extends": "../tsconfig_base.json",
+  "compilerOptions": {
+    "jsx": "react",
+    "outDir": "dist",
+    "rootDir": "src"
+  },
+  "include": ["./src/**/*.ts", "./src/**/*.tsx"],
+  "references": [
+    {
+      "path": "../todos-backend"
+    },
+    {
+      "path": "../todos-frontend"
+    }
+  ]
+}

@@ -1,0 +1,15 @@
+{
+  "extends": "../tsconfig_lib.json",
+  "compilerOptions": {
+    "jsx": "react",
+    "outDir": "dist",
+    "rootDir": "src"
+  },
+  "include": ["./src/**/*.ts", "./src/**/*.tsx"],
+  "exclude": ["**/*.test.*"],
+  "references": [
+    {
+      "path": "../todos-contract"
+    }
+  ]
+}

@@ -1,0 +1,31 @@
+{
+  "name": "todos",
+  "version": "1.0.0",
+  "workspaces": [
+    "todos-contract",
+    "todos-backend",
+    "todos-frontend",
+    "todos"
+  ],
+  "scripts": {
+    "all": "npm run build && npm run analyze",
+    "predev": "npm run build",
+    "dev": "concurrently \"tsc --build --watch\" \"npm:tailwindcss:watch --workspace todos-frontend\" \"npm:dev --workspace=todos\"",
+    "build": "tsc --build && npm run build --workspace=todos-frontend && npm run build --workspace=todos",
+    "clean": "tsc --build --clean && npm run clean --workspace=todos",
+    "test": "npm run test --workspaces --if-present",
+    "analyze": "npm run prettier:check && npm run eslint",
+    "eslint": "eslint --ext .ts,.tsx */src",
+    "prettier:check": "prettier --check .",
+    "prettier:write": "prettier --write ."
+  },
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^5.36.0",
+    "@typescript-eslint/parser": "^5.36.0",
+    "concurrently": "^7.3.0",
+    "eslint": "^8.23.0",
+    "eslint-config-prettier": "^8.5.0",
+    "prettier": "^2.7.1",
+    "typescript": "^4.8.2"
+  }
+}
