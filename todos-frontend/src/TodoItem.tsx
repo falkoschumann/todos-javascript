@@ -3,13 +3,13 @@ import React from 'react';
 
 import { Todo } from 'todos-contract';
 
-interface TodoItemProps {
-  readonly todo: Todo;
+import { DestroyIcon } from './DestroyIcon';
 
+type TodoItemProps = Readonly<{
+  todo: Todo;
   destroy(): void;
-
   toggle(): void;
-}
+}>;
 
 export function TodoItem({ todo, destroy, toggle }: TodoItemProps) {
   function handleToggle() {
@@ -44,9 +44,7 @@ export function TodoItem({ todo, destroy, toggle }: TodoItemProps) {
           onClick={handleDestroy}
           className="hidden group-hover:block text-blue-700 border border-blue-700 hover:bg-blue-700 hover:text-white focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm p-1 text-center inline-flex items-center mr-2 dark:border-blue-500 dark:text-blue-500 dark:hover:text-white dark:focus:ring-blue-800"
         >
-          <svg aria-hidden fill="currentColor" xmlns="http://www.w3.org/2000/svg" height="24" width="24">
-            <path d="m12 13.4-4.9 4.9q-.275.275-.7.275-.425 0-.7-.275-.275-.275-.275-.7 0-.425.275-.7l4.9-4.9-4.9-4.9q-.275-.275-.275-.7 0-.425.275-.7.275-.275.7-.275.425 0 .7.275l4.9 4.9 4.9-4.9q.275-.275.7-.275.425 0 .7.275.275.275.275.7 0 .425-.275.7L13.4 12l4.9 4.9q.275.275.275.7 0 .425-.275.7-.275.275-.7.275-.425 0-.7-.275Z" />
-          </svg>
+          <DestroyIcon />
           <span className="sr-only">remove</span>
         </button>
       </div>

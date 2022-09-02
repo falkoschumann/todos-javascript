@@ -9,12 +9,12 @@ import { getTodosProjection } from './TodosProjection';
 import { Header } from './Header';
 import { TodoItem } from './TodoItem';
 
-interface TodosControllerProps {
-  readonly selectedTodos?: SelectTodosQueryResult;
+type TodosControllerProps = Readonly<{
+  selectedTodos?: SelectTodosQueryResult;
   addTodo(command: AddTodoCommand): void;
   destroyTodo(command: DestroyTodoCommand): void;
   toggleTodo(command: ToggleTodoCommand): void;
-}
+}>;
 
 export function TodosController({ selectedTodos, addTodo, destroyTodo, toggleTodo }: TodosControllerProps) {
   const filter = useFilter();

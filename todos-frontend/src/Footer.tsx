@@ -5,10 +5,10 @@ import React from 'react';
 import { Filter } from './Filter';
 import { pluralize } from './pluralize';
 
-interface FooterProps {
-  readonly activeCount: number;
-  readonly filter: Filter;
-}
+type FooterProps = Readonly<{
+  activeCount: number;
+  filter: Filter;
+}>;
 
 export function Footer({ activeCount, filter }: FooterProps) {
   return (

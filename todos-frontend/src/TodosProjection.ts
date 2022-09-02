@@ -2,11 +2,11 @@ import { Todo } from 'todos-contract';
 
 import { Filter } from './Filter';
 
-interface TodosProjection {
-  readonly existsTodos: boolean;
-  readonly shownTodos: readonly Todo[];
-  readonly activeCount: number;
-}
+type TodosProjection = Readonly<{
+  existsTodos: boolean;
+  shownTodos: readonly Todo[];
+  activeCount: number;
+}>;
 
 export function getTodosProjection(todos: readonly Todo[] = [], filter: Filter = Filter.All): TodosProjection {
   const existsTodos = todos.length > 0;

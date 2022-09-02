@@ -1,8 +1,8 @@
 import React, { ChangeEvent, KeyboardEvent, useState } from 'react';
 
-interface HeaderProps {
+type HeaderProps = Readonly<{
   addTodo(title: string): void;
-}
+}>;
 
 export function Header({ addTodo }: HeaderProps) {
   const [newTitle, setNewTitle] = useState('');
