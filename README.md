@@ -13,6 +13,7 @@ A simple app for managing todos, following the example of
   - When there are no todos, then only show new todo text field.
 - Select todos (id, title, completed)\*
   - When todos exist, then show number of active todos.
+  - When a todo is completed, then display title strikethrough.
   - When a filter set, then only active or completed todos will be displayed.
 
 ## Complete todo
@@ -20,7 +21,6 @@ A simple app for managing todos, following the example of
 - Toggle todo (id)
   - When a todo is active, then mark it as completed.
   - When a todo is completed, then mark it as active.
-  - When a todo is completed, then display title strikethrough.
 - Toggle all (checked)
   - When all todos are completed, then toggle all is checked.
   - When toggle all is checked, then all todos will be set active.
