@@ -10,17 +10,20 @@ function testTodosProjection(
   whenFilter: Filter,
   thenExistsTodos: boolean,
   thenShownTodos: readonly Todo[],
-  thenActiveTodos: number
+  thenActiveTodos: number,
+  thenExistsCompleted: boolean
 ) {
-  const { shownTodos, activeCount } = getTodosProjection(whenTodos, whenFilter);
+  const { existsTodos, shownTodos, activeCount, existsCompleted } = getTodosProjection(whenTodos, whenFilter);
 
+  expect(existsTodos).to.be.equal(thenExistsTodos);
   expect(shownTodos).to.be.deep.equal(thenShownTodos);
   expect(activeCount).to.be.equal(thenActiveTodos);
+  expect(existsCompleted).to.be.equal(thenExistsCompleted);
 }
 
 describe('Todos projection', () => {
   it('is empty.', async () => {
-    testTodosProjection([], Filter.All, false, [], 0);
+    testTodosProjection([], Filter.All, false, [], 0, false);
   });
 
   it('shows all.', async () => {
@@ -35,7 +38,8 @@ describe('Todos projection', () => {
         { id: 1, title: 'Taste JavaScript', completed: true },
         { id: 2, title: 'Buy Unicorn', completed: false },
       ],
-      1
+      1,
+      true
     );
   });
 
@@ -48,7 +52,8 @@ describe('Todos projection', () => {
       Filter.Active,
       true,
       [{ id: 2, title: 'Buy Unicorn', completed: false }],
-      1
+      1,
+      true
     );
   });
 
@@ -61,7 +66,8 @@ describe('Todos projection', () => {
       Filter.Completed,
       true,
       [{ id: 1, title: 'Taste JavaScript', completed: true }],
-      1
+      1,
+      true
     );
   });
 
@@ -77,7 +83,8 @@ describe('Todos projection', () => {
         { id: 1, title: 'Taste JavaScript', completed: false },
         { id: 2, title: 'Buy Unicorn', completed: false },
       ],
-      2
+      2,
+      false
     );
   });
 
@@ -93,7 +100,8 @@ describe('Todos projection', () => {
         { id: 1, title: 'Taste JavaScript', completed: true },
         { id: 2, title: 'Buy Unicorn', completed: true },
       ],
-      0
+      0,
+      true
     );
   });
 });

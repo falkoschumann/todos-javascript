@@ -6,6 +6,7 @@ type TodosProjection = Readonly<{
   existsTodos: boolean;
   shownTodos: readonly Todo[];
   activeCount: number;
+  existsCompleted: boolean;
 }>;
 
 export function getTodosProjection(todos: readonly Todo[] = [], filter: Filter = Filter.All): TodosProjection {
@@ -24,5 +25,7 @@ export function getTodosProjection(todos: readonly Todo[] = [], filter: Filter =
     }
   });
 
-  return { existsTodos, shownTodos, activeCount };
+  const existsCompleted = todos.filter((todo) => todo.completed).length > 0;
+
+  return { existsTodos, shownTodos, activeCount, existsCompleted };
 }

@@ -9,6 +9,7 @@
   ],
   "scripts": {
     "all": "npm run build && npm run test && npm run analyze",
+    "predev": "npm run build",
     "dev": "concurrently \"npm:dev:*\"",
     "dev:todos-contract": "npm run watch --workspace todos-contract",
     "dev:todos-backend": "npm run watch --workspace todos-backend",

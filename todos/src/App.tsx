@@ -1,23 +1,28 @@
 import React, { useEffect, useState } from 'react';
 import { Route, Routes } from 'react-router-dom';
 
-import { AddTodoCommand, DestroyTodoCommand, SelectTodosQueryResult, ToggleTodoCommand } from 'todos-contract';
+import {
+  AddTodoCommand,
+  ClearCompletedCommand,
+  DestroyTodoCommand,
+  SelectTodosQueryResult,
+  ToggleTodoCommand,
+} from 'todos-contract';
 import {
   createAddTodoCommandHandler,
+  createClearCompletedCommandHandler,
   createDestroyTodoCommandHandler,
   createSelectTodosQueryHandler,
   createToggleTodoCommandHandler,
-  MemoryTodosRepository,
+  StorageTodosRepository,
 } from 'todos-backend';
 import { TodosController } from 'todos-frontend';
 
 import './app.css';
 
-const todosRepository = new MemoryTodosRepository([
-  { id: 1, title: 'Taste JavaScript', completed: true },
-  { id: 2, title: 'Buy Unicorn', completed: false },
-]);
+const todosRepository = new StorageTodosRepository();
 const addTodoCommandHandler = createAddTodoCommandHandler(todosRepository);
+const clearCompletedCommandHandler = createClearCompletedCommandHandler(todosRepository);
 const destroyTodoCommandHandler = createDestroyTodoCommandHandler(todosRepository);
 const toggleTodoCommandHandler = createToggleTodoCommandHandler(todosRepository);
 const selectTodosQueryHandler = createSelectTodosQueryHandler(todosRepository);
@@ -25,19 +30,25 @@ const selectTodosQueryHandler = createSelectTodosQueryHandler(todosRepository);
 export function App() {
   const [selectedTodos, setSelectedTodos] = useState<SelectTodosQueryResult>();
 
-  async function addTodo(command: AddTodoCommand) {
+  async function handleAddTodo(command: AddTodoCommand) {
     await addTodoCommandHandler(command);
     const result = await selectTodosQueryHandler({});
     setSelectedTodos(result);
   }
 
-  async function destroyTodo(command: DestroyTodoCommand) {
+  async function handleClearCompleted(command: ClearCompletedCommand) {
+    await clearCompletedCommandHandler(command);
+    const result = await selectTodosQueryHandler({});
+    setSelectedTodos(result);
+  }
+
+  async function handleDestroyTodo(command: DestroyTodoCommand) {
     await destroyTodoCommandHandler(command);
     const result = await selectTodosQueryHandler({});
     setSelectedTodos(result);
   }
 
-  async function toggleTodo(command: ToggleTodoCommand) {
+  async function handleToggleTodo(command: ToggleTodoCommand) {
     await toggleTodoCommandHandler(command);
     const result = await selectTodosQueryHandler({});
     setSelectedTodos(result);
@@ -57,9 +68,10 @@ export function App() {
         element={
           <TodosController
             selectedTodos={selectedTodos}
-            addTodo={addTodo}
-            destroyTodo={destroyTodo}
-            toggleTodo={toggleTodo}
+            addTodo={handleAddTodo}
+            clearCompleted={handleClearCompleted}
+            destroyTodo={handleDestroyTodo}
+            toggleTodo={handleToggleTodo}
           />
         }
       />

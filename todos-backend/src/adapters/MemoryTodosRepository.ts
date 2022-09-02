@@ -1,7 +1,7 @@
 import { Todo, TodosRepository } from 'todos-contract';
 
 export class MemoryTodosRepository implements TodosRepository {
-  #todos: Todo[] = [];
+  #todos: Todo[];
 
   constructor(todos: readonly Todo[] = []) {
     this.#todos = [...todos];

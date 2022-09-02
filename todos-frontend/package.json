@@ -6,9 +6,10 @@
   "scripts": {
     "build": "npm run compile && npm run tailwindcss",
     "clean": "rm -rf dist",
-    "watch": "tsc --watch",
+    "watch": "concurrently \"npm run compile:watch\" \"npm run tailwindcss:watch\"",
     "test": "TS_NODE_PROJECT=./tsconfig-test.json mocha --require ts-node/register src/**/*.test.ts",
     "compile": "tsc",
+    "compile:watch": "tsc --watch",
     "tailwindcss": "tailwindcss -i ./src/style.css -o ./dist/style.css --minify",
     "tailwindcss:watch": "tailwindcss -i ./src/style.css -o ./dist/style.css --watch"
   },
@@ -25,6 +26,7 @@
     "@types/chai": "^4.3.3",
     "@types/mocha": "^9.1.1",
     "chai": "^4.3.6",
+    "concurrently": "^7.3.0",
     "mocha": "^10.0.0",
     "tailwindcss": "^3.1.8",
     "ts-node": "^10.9.1",

@@ -1,7 +1,13 @@
 import React from 'react';
 import { useLocation } from 'react-router-dom';
 
-import { AddTodoCommand, DestroyTodoCommand, SelectTodosQueryResult, ToggleTodoCommand } from 'todos-contract';
+import {
+  AddTodoCommand,
+  ClearCompletedCommand,
+  DestroyTodoCommand,
+  SelectTodosQueryResult,
+  ToggleTodoCommand,
+} from 'todos-contract';
 
 import { Filter } from './Filter';
 import { Footer } from './Footer';
@@ -12,11 +18,18 @@ import { TodoItem } from './TodoItem';
 type TodosControllerProps = Readonly<{
   selectedTodos?: SelectTodosQueryResult;
   addTodo(command: AddTodoCommand): void;
+  clearCompleted(command: ClearCompletedCommand): void;
   destroyTodo(command: DestroyTodoCommand): void;
   toggleTodo(command: ToggleTodoCommand): void;
 }>;
 
-export function TodosController({ selectedTodos, addTodo, destroyTodo, toggleTodo }: TodosControllerProps) {
+export function TodosController({
+  selectedTodos,
+  addTodo,
+  clearCompleted,
+  destroyTodo,
+  toggleTodo,
+}: TodosControllerProps) {
   const filter = useFilter();
   const { existsTodos, shownTodos, activeCount } = getTodosProjection(selectedTodos?.todos, filter);
 
@@ -24,12 +37,16 @@ export function TodosController({ selectedTodos, addTodo, destroyTodo, toggleTod
     addTodo({ title });
   }
 
-  function handleToggleTodo(id: number) {
-    toggleTodo({ id });
+  function handleClearCompleted() {
+    clearCompleted({});
   }
 
   function handleDestroyTodo(id: number) {
     destroyTodo({ id });
+  }
+
+  function handleToggleTodo(id: number) {
+    toggleTodo({ id });
   }
 
   return (
@@ -49,7 +66,7 @@ export function TodosController({ selectedTodos, addTodo, destroyTodo, toggleTod
               ))}
             </ul>
           </main>
-          <Footer activeCount={activeCount} filter={filter} />
+          <Footer activeCount={activeCount} filter={filter} clearCompleted={handleClearCompleted} />
         </>
       )}
     </section>
