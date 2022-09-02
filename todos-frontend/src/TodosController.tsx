@@ -1,7 +1,7 @@
 import React from 'react';
 import { useLocation } from 'react-router-dom';
 
-import { AddTodoCommand, SelectTodosQueryResult, ToggleTodoCommand } from 'todos-contract';
+import { AddTodoCommand, DestroyTodoCommand, SelectTodosQueryResult, ToggleTodoCommand } from 'todos-contract';
 
 import { Filter } from './Filter';
 import { Footer } from './Footer';
@@ -12,10 +12,11 @@ import { TodoItem } from './TodoItem';
 interface TodosControllerProps {
   readonly selectedTodos?: SelectTodosQueryResult;
   addTodo(command: AddTodoCommand): void;
+  destroyTodo(command: DestroyTodoCommand): void;
   toggleTodo(command: ToggleTodoCommand): void;
 }
 
-export function TodosController({ selectedTodos, addTodo, toggleTodo }: TodosControllerProps) {
+export function TodosController({ selectedTodos, addTodo, destroyTodo, toggleTodo }: TodosControllerProps) {
   const filter = useFilter();
   const { existsTodos, shownTodos, activeCount } = getTodosProjection(selectedTodos?.todos, filter);
 
@@ -27,6 +28,10 @@ export function TodosController({ selectedTodos, addTodo, toggleTodo }: TodosCon
     toggleTodo({ id });
   }
 
+  function handleDestroyTodo(id: number) {
+    destroyTodo({ id });
+  }
+
   return (
     <section className="container mx-auto">
       <Header addTodo={handleAddTodo} />
@@ -35,7 +40,12 @@ export function TodosController({ selectedTodos, addTodo, toggleTodo }: TodosCon
           <main className="p-4 sm:p-6">
             <ul>
               {shownTodos.map((todo) => (
-                <TodoItem key={todo.id} todo={todo} toggle={() => handleToggleTodo(todo.id)} />
+                <TodoItem
+                  key={todo.id}
+                  todo={todo}
+                  destroy={() => handleDestroyTodo(todo.id)}
+                  toggle={() => handleToggleTodo(todo.id)}
+                />
               ))}
             </ul>
           </main>
