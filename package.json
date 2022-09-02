@@ -9,10 +9,13 @@
   ],
   "scripts": {
     "all": "npm run build && npm run test && npm run analyze",
-    "predev": "npm run build",
-    "dev": "concurrently \"tsc --build --watch\" \"npm:tailwindcss:watch --workspace todos-frontend\" \"npm:dev --workspace=todos\"",
-    "build": "tsc --build && npm run build --workspace=todos-frontend && npm run build --workspace=todos",
-    "clean": "tsc --build --clean && npm run clean --workspace=todos",
+    "dev": "concurrently \"npm:dev:*\"",
+    "dev:todos-contract": "npm run watch --workspace todos-contract",
+    "dev:todos-backend": "npm run watch --workspace todos-backend",
+    "dev:todos-frontend": "npm run watch --workspace todos-frontend",
+    "dev:todos": "npm run dev --workspace todos",
+    "build": "npm run build --workspaces --if-present",
+    "clean": "npm run clean --workspaces --if-present",
     "test": "npm run test --workspaces --if-present",
     "analyze": "npm run prettier:check && npm run eslint",
     "eslint": "eslint --ext .ts,.tsx */src",
@@ -27,7 +30,6 @@
     "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-react": "^7.31.1",
     "eslint-plugin-react-hooks": "^4.6.0",
-    "prettier": "^2.7.1",
-    "typescript": "^4.8.2"
+    "prettier": "^2.7.1"
   }
 }

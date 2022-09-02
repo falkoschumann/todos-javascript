@@ -1,7 +1,14 @@
 {
-  "extends": "../tsconfig_lib.json",
   "compilerOptions": {
     "outDir": "dist",
-    "rootDir": "src"
-  }
+    "declaration": true,
+    "declarationMap": true,
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "strict": true,
+    "target": "es2015"
+  },
+  "include": ["src/**/*.ts"]
 }

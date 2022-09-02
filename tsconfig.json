@@ -1,4 +1,0 @@
-{
-  "references": [{ "path": "todos-contract" }, { "path": "todos-backend" }, { "path": "todos-frontend" }],
-  "files": []
-}

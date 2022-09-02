@@ -1,15 +1,16 @@
 {
-  "extends": "../tsconfig_lib.json",
   "compilerOptions": {
-    "jsx": "react",
     "outDir": "dist",
-    "rootDir": "src"
+    "jsx": "react",
+    "declaration": true,
+    "declarationMap": true,
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "strict": true,
+    "target": "es2015"
   },
-  "include": ["./src/**/*.ts", "./src/**/*.tsx"],
-  "exclude": ["**/*.test.*"],
-  "references": [
-    {
-      "path": "../todos-contract"
-    }
-  ]
+  "include": ["src/**/*.ts", "src/**/*.tsx"],
+  "exclude": ["**/*.test.*"]
 }
