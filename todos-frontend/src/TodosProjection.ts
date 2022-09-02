@@ -3,11 +3,14 @@ import { Todo } from 'todos-contract';
 import { Filter } from './Filter';
 
 interface TodosProjection {
+  readonly existsTodos: boolean;
   readonly shownTodos: readonly Todo[];
   readonly activeCount: number;
 }
 
-export function useTodosProjection(todos: readonly Todo[] = [], filter: Filter = Filter.All): TodosProjection {
+export function getTodosProjection(todos: readonly Todo[] = [], filter: Filter = Filter.All): TodosProjection {
+  const existsTodos = todos.length > 0;
+
   const activeCount = todos.filter((todo) => !todo.completed).length;
 
   const shownTodos = todos.filter((todo) => {
@@ -21,5 +24,5 @@ export function useTodosProjection(todos: readonly Todo[] = [], filter: Filter =
     }
   });
 
-  return { shownTodos, activeCount };
+  return { existsTodos, shownTodos, activeCount };
 }

@@ -8,7 +8,7 @@
     "todos"
   ],
   "scripts": {
-    "all": "npm run build && npm run analyze",
+    "all": "npm run build && npm run test && npm run analyze",
     "predev": "npm run build",
     "dev": "concurrently \"tsc --build --watch\" \"npm:tailwindcss:watch --workspace todos-frontend\" \"npm:dev --workspace=todos\"",
     "build": "tsc --build && npm run build --workspace=todos-frontend && npm run build --workspace=todos",
@@ -25,6 +25,8 @@
     "concurrently": "^7.3.0",
     "eslint": "^8.23.0",
     "eslint-config-prettier": "^8.5.0",
+    "eslint-plugin-react": "^7.31.1",
+    "eslint-plugin-react-hooks": "^4.6.0",
     "prettier": "^2.7.1",
     "typescript": "^4.8.2"
   }

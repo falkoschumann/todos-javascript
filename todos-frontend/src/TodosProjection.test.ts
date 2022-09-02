@@ -3,15 +3,16 @@ import { expect } from 'chai';
 import { Todo } from 'todos-contract';
 
 import { Filter } from './Filter';
-import { useTodosProjection } from './TodosProjection';
+import { getTodosProjection } from './TodosProjection';
 
 function testTodosProjection(
   whenTodos: readonly Todo[],
   whenFilter: Filter,
+  thenExistsTodos: boolean,
   thenShownTodos: readonly Todo[],
   thenActiveTodos: number
 ) {
-  const { shownTodos, activeCount } = useTodosProjection(whenTodos, whenFilter);
+  const { shownTodos, activeCount } = getTodosProjection(whenTodos, whenFilter);
 
   expect(shownTodos).to.be.deep.equal(thenShownTodos);
   expect(activeCount).to.be.equal(thenActiveTodos);
@@ -19,7 +20,7 @@ function testTodosProjection(
 
 describe('Todos projection', () => {
   it('is empty.', async () => {
-    testTodosProjection([], Filter.All, [], 0);
+    testTodosProjection([], Filter.All, false, [], 0);
   });
 
   it('shows all.', async () => {
@@ -29,6 +30,7 @@ describe('Todos projection', () => {
         { id: 2, title: 'Buy Unicorn', completed: false },
       ],
       Filter.All,
+      true,
       [
         { id: 1, title: 'Taste JavaScript', completed: true },
         { id: 2, title: 'Buy Unicorn', completed: false },
@@ -44,6 +46,7 @@ describe('Todos projection', () => {
         { id: 2, title: 'Buy Unicorn', completed: false },
       ],
       Filter.Active,
+      true,
       [{ id: 2, title: 'Buy Unicorn', completed: false }],
       1
     );
@@ -56,6 +59,7 @@ describe('Todos projection', () => {
         { id: 2, title: 'Buy Unicorn', completed: false },
       ],
       Filter.Completed,
+      true,
       [{ id: 1, title: 'Taste JavaScript', completed: true }],
       1
     );
@@ -68,6 +72,7 @@ describe('Todos projection', () => {
         { id: 2, title: 'Buy Unicorn', completed: false },
       ],
       Filter.Active,
+      true,
       [
         { id: 1, title: 'Taste JavaScript', completed: false },
         { id: 2, title: 'Buy Unicorn', completed: false },
@@ -83,6 +88,7 @@ describe('Todos projection', () => {
         { id: 2, title: 'Buy Unicorn', completed: true },
       ],
       Filter.Completed,
+      true,
       [
         { id: 1, title: 'Taste JavaScript', completed: true },
         { id: 2, title: 'Buy Unicorn', completed: true },

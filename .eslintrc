@@ -1,7 +1,13 @@
 {
-  "extends": ["eslint:recommended", "prettier", "plugin:@typescript-eslint/recommended"],
+  "extends": [
+    "eslint:recommended",
+    "prettier",
+    "plugin:@typescript-eslint/recommended",
+    "plugin:react/recommended",
+    "plugin:react-hooks/recommended"
+  ],
   "parser": "@typescript-eslint/parser",
-  "plugins": ["@typescript-eslint"],
+  "plugins": ["@typescript-eslint", "react", "react-hooks"],
   "root": true,
   "rules": {
     "sort-imports": [
@@ -11,5 +17,10 @@
         "allowSeparatedGroups": true
       }
     ]
+  },
+  "settings": {
+    "react": {
+      "version": "18"
+    }
   }
 }
