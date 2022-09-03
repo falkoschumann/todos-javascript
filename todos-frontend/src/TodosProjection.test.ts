@@ -10,20 +10,25 @@ function testTodosProjection(
   whenFilter: Filter,
   thenExistsTodos: boolean,
   thenShownTodos: readonly Todo[],
+  thenIsAllCompleted: boolean,
   thenActiveTodos: number,
   thenExistsCompleted: boolean
 ) {
-  const { existsTodos, shownTodos, activeCount, existsCompleted } = getTodosProjection(whenTodos, whenFilter);
+  const { existsTodos, shownTodos, isAllCompleted, activeCount, existsCompleted } = getTodosProjection(
+    whenTodos,
+    whenFilter
+  );
 
-  expect(existsTodos).to.be.equal(thenExistsTodos);
-  expect(shownTodos).to.be.deep.equal(thenShownTodos);
-  expect(activeCount).to.be.equal(thenActiveTodos);
-  expect(existsCompleted).to.be.equal(thenExistsCompleted);
+  expect(existsTodos, 'exists todos').to.be.equal(thenExistsTodos);
+  expect(shownTodos, 'shown todos').to.be.deep.equal(thenShownTodos);
+  expect(isAllCompleted, 'is all completed').to.be.equal(thenIsAllCompleted);
+  expect(activeCount, 'active count').to.be.equal(thenActiveTodos);
+  expect(existsCompleted, 'exists completed').to.be.equal(thenExistsCompleted);
 }
 
 describe('Todos projection', () => {
   it('is empty.', async () => {
-    testTodosProjection([], Filter.All, false, [], 0, false);
+    testTodosProjection([], Filter.All, false, [], false, 0, false);
   });
 
   it('shows all.', async () => {
@@ -38,6 +43,7 @@ describe('Todos projection', () => {
         { id: 1, title: 'Taste JavaScript', completed: true },
         { id: 2, title: 'Buy Unicorn', completed: false },
       ],
+      false,
       1,
       true
     );
@@ -52,6 +58,7 @@ describe('Todos projection', () => {
       Filter.Active,
       true,
       [{ id: 2, title: 'Buy Unicorn', completed: false }],
+      false,
       1,
       true
     );
@@ -66,6 +73,7 @@ describe('Todos projection', () => {
       Filter.Completed,
       true,
       [{ id: 1, title: 'Taste JavaScript', completed: true }],
+      false,
       1,
       true
     );
@@ -83,6 +91,7 @@ describe('Todos projection', () => {
         { id: 1, title: 'Taste JavaScript', completed: false },
         { id: 2, title: 'Buy Unicorn', completed: false },
       ],
+      false,
       2,
       false
     );
@@ -100,6 +109,7 @@ describe('Todos projection', () => {
         { id: 1, title: 'Taste JavaScript', completed: true },
         { id: 2, title: 'Buy Unicorn', completed: true },
       ],
+      true,
       0,
       true
     );

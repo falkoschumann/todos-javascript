@@ -13,7 +13,7 @@ describe('Clear completed', () => {
 
     const status = await clearCompleted({});
 
-    expect(status).to.deep.equal({ success: true });
-    expect(await todosRepository.load()).to.deep.equal([{ id: 2, title: 'Buy Unicorn', completed: false }]);
+    expect(status, 'status').to.deep.equal({ success: true });
+    expect(await todosRepository.load(), 'todos').to.deep.equal([{ id: 2, title: 'Buy Unicorn', completed: false }]);
   });
 });

@@ -17,8 +17,8 @@ function testAddTodo(
 
     const status = await addTodo(whenCommand);
 
-    expect(status).to.deep.equal(thenStatus);
-    expect(await todosRepository.load()).to.deep.equal(thenTodos);
+    expect(status, 'status').to.deep.equal(thenStatus);
+    expect(await todosRepository.load(), 'todos').to.deep.equal(thenTodos);
   };
 }
 

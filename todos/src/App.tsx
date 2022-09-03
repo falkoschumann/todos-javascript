@@ -6,6 +6,7 @@ import {
   ClearCompletedCommand,
   DestroyTodoCommand,
   SelectTodosQueryResult,
+  ToggleAllCommand,
   ToggleTodoCommand,
 } from 'todos-contract';
 import {
@@ -13,6 +14,7 @@ import {
   createClearCompletedCommandHandler,
   createDestroyTodoCommandHandler,
   createSelectTodosQueryHandler,
+  createToggleAllCommandHandler,
   createToggleTodoCommandHandler,
   StorageTodosRepository,
 } from 'todos-backend';
@@ -24,6 +26,7 @@ const todosRepository = new StorageTodosRepository();
 const addTodoCommandHandler = createAddTodoCommandHandler(todosRepository);
 const clearCompletedCommandHandler = createClearCompletedCommandHandler(todosRepository);
 const destroyTodoCommandHandler = createDestroyTodoCommandHandler(todosRepository);
+const toggleAllCommandHandler = createToggleAllCommandHandler(todosRepository);
 const toggleTodoCommandHandler = createToggleTodoCommandHandler(todosRepository);
 const selectTodosQueryHandler = createSelectTodosQueryHandler(todosRepository);
 
@@ -48,6 +51,12 @@ export function App() {
     setSelectedTodos(result);
   }
 
+  async function handleToggleAll(command: ToggleAllCommand) {
+    await toggleAllCommandHandler(command);
+    const result = await selectTodosQueryHandler({});
+    setSelectedTodos(result);
+  }
+
   async function handleToggleTodo(command: ToggleTodoCommand) {
     await toggleTodoCommandHandler(command);
     const result = await selectTodosQueryHandler({});
@@ -61,6 +70,8 @@ export function App() {
     })();
   }, []);
 
+  // TODO extract AppController and move to frontend
+  // TODO integrate App into index
   return (
     <Routes>
       <Route
@@ -71,6 +82,7 @@ export function App() {
             addTodo={handleAddTodo}
             clearCompleted={handleClearCompleted}
             destroyTodo={handleDestroyTodo}
+            toggleAll={handleToggleAll}
             toggleTodo={handleToggleTodo}
           />
         }

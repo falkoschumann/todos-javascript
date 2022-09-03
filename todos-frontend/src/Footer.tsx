@@ -7,20 +7,21 @@ import { pluralize } from './pluralize';
 
 type FooterProps = Readonly<{
   activeCount: number;
+  existsCompleted: boolean;
   filter: Filter;
   clearCompleted(): void;
 }>;
 
-export function Footer({ activeCount, filter, clearCompleted }: FooterProps) {
-  // TODO highlight current filter like pagination; highlight not visible in dark mode?
-
+export function Footer({ activeCount, existsCompleted, filter, clearCompleted }: FooterProps) {
   return (
     <footer className="p-4 bg-white sm:p-6 dark:bg-gray-900">
       <hr className="my-6 border-gray-200 sm:mx-auto dark:border-gray-700 lg:my-8" />
       <div className="sm:flex sm:items-center sm:justify-between">
-        <span className="text-sm text-gray-500 sm:text-center dark:text-gray-400">
-          {activeCount} {pluralize(activeCount, 'item')} left
-        </span>
+        <div className="w-24 content-start">
+          <span className="text-sm text-gray-500 sm:text-center dark:text-gray-400">
+            {activeCount} {pluralize(activeCount, 'item')} left
+          </span>
+        </div>
         <div className="inline-flex rounded-md shadow-md">
           <Link
             to="/"
@@ -56,7 +57,11 @@ export function Footer({ activeCount, filter, clearCompleted }: FooterProps) {
         </div>
         <button
           type="button"
-          className="py-2.5 px-5 mr-2 mb-2 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700"
+          className={classNames({
+            'py-2.5 px-5 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700':
+              true,
+            invisible: !existsCompleted,
+          })}
           onClick={clearCompleted}
         >
           Clear completed

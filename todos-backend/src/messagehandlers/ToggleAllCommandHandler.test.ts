@@ -1,56 +1,56 @@
 import { expect } from 'chai';
 
-import { CommandStatus, Todo, ToggleTodoCommand } from 'todos-contract';
+import { CommandStatus, Todo, ToggleAllCommand } from 'todos-contract';
 
-import { createToggleTodoCommandHandler } from './ToggleTodoCommandHandler';
+import { createToggleAllCommandHandler } from './ToggleAllCommandHandler';
 import { MemoryTodosRepository } from '../adapters/MemoryTodosRepository';
 
 function testToggleTodo(
   givenTodos: readonly Todo[],
-  whenCommand: ToggleTodoCommand,
+  whenCommand: ToggleAllCommand,
   thenStatus: CommandStatus,
   thenTodos: readonly Todo[]
 ) {
   return async () => {
     const todosRepository = new MemoryTodosRepository(givenTodos);
-    const toggleTodo = createToggleTodoCommandHandler(todosRepository);
+    const toggleAll = createToggleAllCommandHandler(todosRepository);
 
-    const status = await toggleTodo(whenCommand);
+    const status = await toggleAll(whenCommand);
 
     expect(status, 'status').to.deep.equal(thenStatus);
     expect(await todosRepository.load(), 'todos').to.deep.equal(thenTodos);
   };
 }
 
-describe('Toggle todo', () => {
+describe('Toggle all', () => {
   it(
-    'activates a todo.',
+    'set all todos completed.',
     testToggleTodo(
       [
         { id: 1, title: 'Taste JavaScript', completed: true },
         { id: 2, title: 'Buy Unicorn', completed: false },
       ],
-      { id: 1 },
+      { checked: true },
       { success: true },
       [
-        { id: 1, title: 'Taste JavaScript', completed: false },
-        { id: 2, title: 'Buy Unicorn', completed: false },
+        { id: 1, title: 'Taste JavaScript', completed: true },
+        { id: 2, title: 'Buy Unicorn', completed: true },
       ]
     )
   );
 
   it(
-    'completes a todo.',
+    'set all todos active.',
     testToggleTodo(
       [
         { id: 1, title: 'Taste JavaScript', completed: true },
         { id: 2, title: 'Buy Unicorn', completed: false },
       ],
-      { id: 2 },
+      { checked: false },
       { success: true },
       [
-        { id: 1, title: 'Taste JavaScript', completed: true },
-        { id: 2, title: 'Buy Unicorn', completed: true },
+        { id: 1, title: 'Taste JavaScript', completed: false },
+        { id: 2, title: 'Buy Unicorn', completed: false },
       ]
     )
   );

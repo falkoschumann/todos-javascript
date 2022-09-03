@@ -6,6 +6,7 @@ import {
   ClearCompletedCommand,
   DestroyTodoCommand,
   SelectTodosQueryResult,
+  ToggleAllCommand,
   ToggleTodoCommand,
 } from 'todos-contract';
 
@@ -20,6 +21,7 @@ type TodosControllerProps = Readonly<{
   addTodo(command: AddTodoCommand): void;
   clearCompleted(command: ClearCompletedCommand): void;
   destroyTodo(command: DestroyTodoCommand): void;
+  toggleAll(command: ToggleAllCommand): void;
   toggleTodo(command: ToggleTodoCommand): void;
 }>;
 
@@ -28,10 +30,14 @@ export function TodosController({
   addTodo,
   clearCompleted,
   destroyTodo,
+  toggleAll,
   toggleTodo,
 }: TodosControllerProps) {
   const filter = useFilter();
-  const { existsTodos, shownTodos, activeCount } = getTodosProjection(selectedTodos?.todos, filter);
+  const { existsTodos, shownTodos, isAllCompleted, activeCount, existsCompleted } = getTodosProjection(
+    selectedTodos?.todos,
+    filter
+  );
 
   function handleAddTodo(title: string) {
     addTodo({ title });
@@ -45,13 +51,17 @@ export function TodosController({
     destroyTodo({ id });
   }
 
+  function handleToggleAll(checked: boolean) {
+    toggleAll({ checked });
+  }
+
   function handleToggleTodo(id: number) {
     toggleTodo({ id });
   }
 
   return (
     <section className="container mx-auto">
-      <Header addTodo={handleAddTodo} />
+      <Header isAllCompleted={isAllCompleted} addTodo={handleAddTodo} toggleAll={handleToggleAll} />
       {existsTodos && (
         <>
           <main className="p-4 sm:p-6">
@@ -66,7 +76,12 @@ export function TodosController({
               ))}
             </ul>
           </main>
-          <Footer activeCount={activeCount} filter={filter} clearCompleted={handleClearCompleted} />
+          <Footer
+            activeCount={activeCount}
+            existsCompleted={existsCompleted}
+            filter={filter}
+            clearCompleted={handleClearCompleted}
+          />
         </>
       )}
     </section>

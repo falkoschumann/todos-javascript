@@ -13,7 +13,9 @@ describe('Destroy todo', () => {
 
     const status = await destroyTodo({ id: 2 });
 
-    expect(status).to.deep.equal({ success: true });
-    expect(await todosRepository.load()).to.deep.equal([{ id: 1, title: 'Taste JavaScript', completed: true }]);
+    expect(status, 'status').to.deep.equal({ success: true });
+    expect(await todosRepository.load(), 'todos').to.deep.equal([
+      { id: 1, title: 'Taste JavaScript', completed: true },
+    ]);
   });
 });

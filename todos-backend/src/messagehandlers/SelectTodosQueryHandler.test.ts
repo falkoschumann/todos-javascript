@@ -13,7 +13,7 @@ describe('Select todos', () => {
 
     const result = await selectTodos({});
 
-    expect(result).to.deep.equal({
+    expect(result, 'result').to.deep.equal({
       todos: [
         { id: 1, title: 'Taste JavaScript', completed: true },
         { id: 2, title: 'Buy Unicorn', completed: false },
