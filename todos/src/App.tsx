@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import { Route, Routes } from 'react-router-dom';
 
 import {
   AddTodoCommand,
@@ -18,7 +17,7 @@ import {
   createToggleTodoCommandHandler,
   StorageTodosRepository,
 } from 'todos-backend';
-import { TodosController } from 'todos-frontend';
+import { AppController } from 'todos-frontend';
 
 import './app.css';
 
@@ -70,23 +69,14 @@ export function App() {
     })();
   }, []);
 
-  // TODO extract AppController and move to frontend
-  // TODO integrate App into index
   return (
-    <Routes>
-      <Route
-        path="*"
-        element={
-          <TodosController
-            selectedTodos={selectedTodos}
-            addTodo={handleAddTodo}
-            clearCompleted={handleClearCompleted}
-            destroyTodo={handleDestroyTodo}
-            toggleAll={handleToggleAll}
-            toggleTodo={handleToggleTodo}
-          />
-        }
-      />
-    </Routes>
+    <AppController
+      selectedTodos={selectedTodos}
+      addTodo={handleAddTodo}
+      clearCompleted={handleClearCompleted}
+      destroyTodo={handleDestroyTodo}
+      toggleAll={handleToggleAll}
+      toggleTodo={handleToggleTodo}
+    />
   );
 }

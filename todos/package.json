@@ -13,7 +13,6 @@
     "@types/react-dom": "^18.0.6",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "react-router-dom": "^6.3.0",
     "todos-backend": "^1.0.0",
     "todos-frontend": "^1.0.0"
   },
