@@ -8,6 +8,8 @@ import {
   ClearCompletedCommandHandler,
   DestroyTodoCommand,
   DestroyTodoCommandHandler,
+  SaveTodoCommand,
+  SaveTodoCommandHandler,
   SelectTodosQueryHandler,
   SelectTodosQueryResult,
   ToggleAllCommand,
@@ -22,6 +24,7 @@ type AppControllerProps = Readonly<{
   addTodoCommandHandler: AddTodoCommandHandler;
   clearCompletedCommandHandler: ClearCompletedCommandHandler;
   destroyTodoCommandHandler: DestroyTodoCommandHandler;
+  saveTodoCommandHandler: SaveTodoCommandHandler;
   toggleAllCommandHandler: ToggleAllCommandHandler;
   toggleTodoCommandHandler: ToggleTodoCommandHandler;
   selectTodosQueryHandler: SelectTodosQueryHandler;
@@ -31,6 +34,7 @@ export function AppController({
   addTodoCommandHandler,
   clearCompletedCommandHandler,
   destroyTodoCommandHandler,
+  saveTodoCommandHandler,
   toggleAllCommandHandler,
   toggleTodoCommandHandler,
   selectTodosQueryHandler,
@@ -55,6 +59,12 @@ export function AppController({
     setSelectedTodos(result);
   }
 
+  async function handleSaveTodo(command: SaveTodoCommand) {
+    await saveTodoCommandHandler(command);
+    const result = await selectTodosQueryHandler({});
+    setSelectedTodos(result);
+  }
+
   async function handleToggleAll(command: ToggleAllCommand) {
     await toggleAllCommandHandler(command);
     const result = await selectTodosQueryHandler({});
@@ -72,7 +82,7 @@ export function AppController({
       const result = await selectTodosQueryHandler({});
       setSelectedTodos(result);
     })();
-  }, []);
+  }, [selectTodosQueryHandler]);
 
   return (
     <BrowserRouter>
@@ -85,6 +95,7 @@ export function AppController({
               onAddTodo={handleAddTodo}
               onClearCompleted={handleClearCompleted}
               onDestroyTodo={handleDestroyTodo}
+              onSaveTodo={handleSaveTodo}
               onToggleAll={handleToggleAll}
               onToggleTodo={handleToggleTodo}
             />

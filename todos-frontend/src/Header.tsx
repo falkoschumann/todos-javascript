@@ -33,7 +33,7 @@ export function Header({ isAllCompleted, addTodo, toggleAll }: HeaderProps) {
   return (
     <header className="p-4 sm:p-6">
       <h1 className="text-5xl font-extrabold text-center dark:text-white">Todos</h1>
-      <div className="mt-6 flex items-center h-6">
+      <div className="mt-6 flex items-center">
         <input
           checked={isAllCompleted}
           onChange={handleToggleAll}

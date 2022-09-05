@@ -1,10 +1,11 @@
 import { AddTodoCommand, CommandStatus, Success, Todo, TodosRepository } from 'todos-contract';
+import { normalizeTitle } from './normalizeTitle';
 
 export function createAddTodoCommandHandler(
   todosRepository: TodosRepository
 ): (command: AddTodoCommand) => Promise<CommandStatus> {
   return async (command) => {
-    const title = command.title.trim();
+    const title = normalizeTitle(command.title);
     if (title.length === 0) {
       return Promise.resolve(new Success());
     }

@@ -1,4 +1,4 @@
-import { CommandStatus, DestroyTodoCommand, Success, Todo, TodosRepository } from 'todos-contract';
+import { CommandStatus, DestroyTodoCommand, Success, Todo, TodoId, TodosRepository } from 'todos-contract';
 
 export function createDestroyTodoCommandHandler(
   todosRepository: TodosRepository
@@ -11,6 +11,6 @@ export function createDestroyTodoCommandHandler(
   };
 }
 
-function destroyTodo(todos: readonly Todo[], id: number): readonly Todo[] {
+function destroyTodo(todos: readonly Todo[], id: TodoId): readonly Todo[] {
   return todos.filter((todo) => todo.id != id);
 }

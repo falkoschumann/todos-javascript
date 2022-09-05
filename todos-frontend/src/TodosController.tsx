@@ -1,11 +1,13 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useLocation } from 'react-router-dom';
 
 import {
   AddTodoCommand,
   ClearCompletedCommand,
   DestroyTodoCommand,
+  SaveTodoCommand,
   SelectTodosQueryResult,
+  TodoId,
   ToggleAllCommand,
   ToggleTodoCommand,
 } from 'todos-contract';
@@ -18,49 +20,65 @@ import { TodoItem } from './TodoItem';
 
 type TodosControllerProps = Readonly<{
   selectedTodos?: SelectTodosQueryResult;
-  addTodo(command: AddTodoCommand): void;
-  clearCompleted(command: ClearCompletedCommand): void;
-  destroyTodo(command: DestroyTodoCommand): void;
-  toggleAll(command: ToggleAllCommand): void;
-  toggleTodo(command: ToggleTodoCommand): void;
+  onAddTodo(command: AddTodoCommand): void;
+  onClearCompleted(command: ClearCompletedCommand): void;
+  onDestroyTodo(command: DestroyTodoCommand): void;
+  onSaveTodo(command: SaveTodoCommand): void;
+  onToggleAll(command: ToggleAllCommand): void;
+  onToggleTodo(command: ToggleTodoCommand): void;
 }>;
 
 export function TodosController({
   selectedTodos,
-  addTodo,
-  clearCompleted,
-  destroyTodo,
-  toggleAll,
-  toggleTodo,
+  onAddTodo,
+  onClearCompleted,
+  onDestroyTodo,
+  onSaveTodo,
+  onToggleAll,
+  onToggleTodo,
 }: TodosControllerProps) {
   const filter = useFilter();
   const { existsTodos, shownTodos, isAllCompleted, activeCount, existsCompleted } = getTodosProjection(
     selectedTodos?.todos,
     filter
   );
+  const [editing, setEditing] = useState<TodoId | null>();
 
   function handleAddTodo(title: string) {
-    addTodo({ title });
+    onAddTodo({ title });
   }
 
   function handleClearCompleted() {
-    clearCompleted({});
+    onClearCompleted({});
   }
 
-  function handleDestroyTodo(id: number) {
-    destroyTodo({ id });
+  function handleCancel() {
+    setEditing(null);
+  }
+
+  function handleDestroyTodo(id: TodoId) {
+    onDestroyTodo({ id });
+  }
+
+  function handleEdit(id: TodoId) {
+    setEditing(id);
+  }
+
+  function handleSaveTodo(id: TodoId, title: string) {
+    onSaveTodo({ id, title });
+    setEditing(null);
   }
 
   function handleToggleAll(checked: boolean) {
-    toggleAll({ checked });
+    onToggleAll({ checked });
   }
 
-  function handleToggleTodo(id: number) {
-    toggleTodo({ id });
+  function handleToggleTodo(id: TodoId) {
+    onToggleTodo({ id });
   }
 
   return (
-    <section className="container mx-auto">
+    <section className="max-w-3xl mx-auto">
       <Header isAllCompleted={isAllCompleted} addTodo={handleAddTodo} toggleAll={handleToggleAll} />
       {existsTodos && (
         <>
@@ -70,8 +88,12 @@ export function TodosController({
                 <TodoItem
                   key={todo.id}
                   todo={todo}
-                  destroy={() => handleDestroyTodo(todo.id)}
-                  toggle={() => handleToggleTodo(todo.id)}
+                  editing={editing === todo.id}
+                  onCancel={() => handleCancel()}
+                  onDestroy={() => handleDestroyTodo(todo.id)}
+                  onEdit={() => handleEdit(todo.id)}
+                  onSave={(title) => handleSaveTodo(todo.id, title)}
+                  onToggle={() => handleToggleTodo(todo.id)}
                 />
               ))}
             </ul>

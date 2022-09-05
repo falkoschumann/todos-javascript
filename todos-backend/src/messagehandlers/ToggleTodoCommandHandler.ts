@@ -1,4 +1,4 @@
-import { CommandStatus, Success, Todo, TodosRepository, ToggleTodoCommand } from 'todos-contract';
+import { CommandStatus, Success, Todo, TodoId, TodosRepository, ToggleTodoCommand } from 'todos-contract';
 
 export function createToggleTodoCommandHandler(
   todosRepository: TodosRepository
@@ -11,6 +11,6 @@ export function createToggleTodoCommandHandler(
   };
 }
 
-function toggleTodo(todos: readonly Todo[], id: number): readonly Todo[] {
+function toggleTodo(todos: readonly Todo[], id: TodoId): readonly Todo[] {
   return todos.map((todo) => (todo.id === id ? { ...todo, completed: !todo.completed } : todo));
 }

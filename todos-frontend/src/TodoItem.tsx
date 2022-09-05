@@ -1,5 +1,5 @@
+import React, { ChangeEvent, KeyboardEvent, useEffect, useRef, useState } from 'react';
 import classNames from 'classnames';
-import React from 'react';
 
 import { Todo } from 'todos-contract';
 
@@ -7,22 +7,45 @@ import { DestroyIcon } from './DestroyIcon';
 
 type TodoItemProps = Readonly<{
   todo: Todo;
-  destroy(): void;
-  toggle(): void;
+  editing: boolean;
+  onCancel(): void;
+  onDestroy(): void;
+  onEdit(): void;
+  onSave(title: string): void;
+  onToggle(): void;
 }>;
 
-export function TodoItem({ todo, destroy, toggle }: TodoItemProps) {
+export function TodoItem({ todo, editing, onCancel, onDestroy, onEdit, onSave, onToggle }: TodoItemProps) {
+  return editing ? (
+    <Edit title={todo.title} onCancel={onCancel} onSave={onSave} />
+  ) : (
+    <View todo={todo} onDestroy={onDestroy} onEdit={onEdit} onToggle={onToggle} />
+  );
+}
+
+type ViewProps = Readonly<{
+  todo: Todo;
+  onDestroy(): void;
+  onEdit(): void;
+  onToggle(): void;
+}>;
+
+function View({ todo, onDestroy, onEdit, onToggle }: ViewProps) {
+  function handleDoubleClick() {
+    onEdit();
+  }
+
   function handleToggle() {
-    toggle();
+    onToggle();
   }
 
   function handleDestroy() {
-    destroy();
+    onDestroy();
   }
 
   return (
     <li>
-      <div className="group flex items-center mb-4 h-6">
+      <div className="group flex items-center h-12">
         <input
           checked={todo.completed}
           onChange={handleToggle}
@@ -33,9 +56,10 @@ export function TodoItem({ todo, destroy, toggle }: TodoItemProps) {
         <label
           htmlFor={`${todo.id}`}
           className={classNames({
-            'grow ml-2 text-sm font-medium text-gray-900 dark:text-gray-300': true,
+            'grow ml-2 p-2.5 text-sm font-medium text-gray-900 dark:text-gray-300': true,
             'line-through': todo.completed,
           })}
+          onDoubleClick={handleDoubleClick}
         >
           {todo.title}
         </label>
@@ -49,5 +73,60 @@ export function TodoItem({ todo, destroy, toggle }: TodoItemProps) {
         </button>
       </div>
     </li>
+  );
+}
+
+type EditProps = Readonly<{
+  title: string;
+  onCancel(): void;
+  onSave(title: string): void;
+}>;
+
+function Edit({ title, onCancel, onSave }: EditProps) {
+  const [editText, setEditText] = useState(title);
+  const editorRef = useRef<HTMLInputElement>(null);
+
+  function handleChange(event: ChangeEvent<HTMLInputElement>) {
+    setEditText(event.target.value);
+  }
+
+  function handleKeyDown(event: KeyboardEvent<HTMLInputElement>) {
+    switch (event.key) {
+      case 'Enter':
+        handleSubmit();
+        break;
+      case 'Escape':
+        setEditText(title);
+        onCancel();
+        break;
+    }
+  }
+
+  function handleSubmit() {
+    const title = editText.trim();
+    onSave(title);
+    setEditText(title);
+  }
+
+  useEffect(() => {
+    if (editorRef.current == null) {
+      return;
+    }
+
+    editorRef.current.focus();
+    editorRef.current.setSelectionRange(0, editorRef.current.value.length);
+  }, []);
+
+  return (
+    <div className="h-12 w-full">
+      <input
+        ref={editorRef}
+        type="text"
+        className="ml-6 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+        value={editText}
+        onChange={handleChange}
+        onKeyDown={handleKeyDown}
+      />
+    </div>
   );
 }

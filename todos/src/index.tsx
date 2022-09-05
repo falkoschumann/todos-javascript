@@ -5,6 +5,7 @@ import {
   createAddTodoCommandHandler,
   createClearCompletedCommandHandler,
   createDestroyTodoCommandHandler,
+  createSaveTodoCommandHandler,
   createSelectTodosQueryHandler,
   createToggleAllCommandHandler,
   createToggleTodoCommandHandler,
@@ -18,6 +19,7 @@ const todosRepository = new StorageTodosRepository();
 const addTodoCommandHandler = createAddTodoCommandHandler(todosRepository);
 const clearCompletedCommandHandler = createClearCompletedCommandHandler(todosRepository);
 const destroyTodoCommandHandler = createDestroyTodoCommandHandler(todosRepository);
+const saveTodoCommandHandler = createSaveTodoCommandHandler(todosRepository);
 const toggleAllCommandHandler = createToggleAllCommandHandler(todosRepository);
 const toggleTodoCommandHandler = createToggleTodoCommandHandler(todosRepository);
 const selectTodosQueryHandler = createSelectTodosQueryHandler(todosRepository);
@@ -29,6 +31,7 @@ root.render(
       addTodoCommandHandler={addTodoCommandHandler}
       clearCompletedCommandHandler={clearCompletedCommandHandler}
       destroyTodoCommandHandler={destroyTodoCommandHandler}
+      saveTodoCommandHandler={saveTodoCommandHandler}
       toggleAllCommandHandler={toggleAllCommandHandler}
       toggleTodoCommandHandler={toggleTodoCommandHandler}
       selectTodosQueryHandler={selectTodosQueryHandler}
