@@ -5,7 +5,7 @@ module.exports = merge(common, {
   mode: 'development',
   devtool: 'source-map',
   devServer: {
-    static: './dist',
+    static: './public',
     historyApiFallback: true,
   },
 });

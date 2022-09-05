@@ -1,3 +1,4 @@
+const CopyPlugin = require('copy-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const path = require('path');
@@ -5,8 +6,11 @@ const path = require('path');
 module.exports = {
   entry: './src/index.tsx',
   plugins: [
+    new CopyPlugin({
+      patterns: [{ from: 'public', filter: (filepath) => !filepath.endsWith('public/index.html') }],
+    }),
     new HtmlWebpackPlugin({
-      template: './src/index.html',
+      template: 'public/index.html',
     }),
     new MiniCssExtractPlugin({
       filename: 'static/css/[name].[contenthash:8].css',
