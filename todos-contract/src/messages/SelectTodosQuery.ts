@@ -6,3 +6,5 @@ export interface SelectTodosQuery {}
 export interface SelectTodosQueryResult {
   readonly todos: readonly Todo[];
 }
+
+export type SelectTodosQueryHandler = (query: SelectTodosQuery) => Promise<SelectTodosQueryResult>;
