@@ -16,7 +16,7 @@ export function createSaveTodoCommandHandler(
 function saveTodo(todos: readonly Todo[], id: TodoId, title: string): readonly Todo[] {
   title = normalizeTitle(title);
   if (title.length === 0) {
-    return todos.filter((todo) => todo.id != id);
+    return todos.filter((todo) => todo.id !== id);
   } else {
     return todos.map((todo) => (todo.id === id ? { ...todo, title } : todo));
   }

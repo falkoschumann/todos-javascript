@@ -12,5 +12,5 @@ export function createDestroyTodoCommandHandler(
 }
 
 function destroyTodo(todos: readonly Todo[], id: TodoId): readonly Todo[] {
-  return todos.filter((todo) => todo.id != id);
+  return todos.filter((todo) => todo.id !== id);
 }

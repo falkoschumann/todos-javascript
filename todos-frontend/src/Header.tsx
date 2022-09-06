@@ -1,3 +1,5 @@
+/* eslint-disable jsx-a11y/no-autofocus */
+
 import React, { ChangeEvent, KeyboardEvent, useState } from 'react';
 
 type HeaderProps = Readonly<{
