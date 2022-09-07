@@ -3,7 +3,7 @@ import { SelectTodosQuery, SelectTodosQueryResult, TodosRepository } from 'todos
 export function createSelectTodosQueryHandler(
   todosRepository: TodosRepository
 ): (query: SelectTodosQuery) => Promise<SelectTodosQueryResult> {
-  return async () => {
+  return async (_) => {
     const todos = await todosRepository.load();
     return Promise.resolve({ todos });
   };

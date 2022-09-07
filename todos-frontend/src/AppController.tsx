@@ -40,39 +40,56 @@ export function AppController({
   selectTodosQueryHandler,
 }: AppControllerProps) {
   const [selectedTodos, setSelectedTodos] = useState<SelectTodosQueryResult>();
-
   async function handleAddTodo(command: AddTodoCommand) {
-    await addTodoCommandHandler(command);
+    const status = await addTodoCommandHandler(command);
+    if (!status.success) {
+      console.error('Add todo failed:', status.errorMessage);
+    }
     const result = await selectTodosQueryHandler({});
     setSelectedTodos(result);
   }
 
   async function handleClearCompleted(command: ClearCompletedCommand) {
-    await clearCompletedCommandHandler(command);
+    const status = await clearCompletedCommandHandler(command);
+    if (!status.success) {
+      console.error('Add todo failed:', status.errorMessage);
+    }
     const result = await selectTodosQueryHandler({});
     setSelectedTodos(result);
   }
 
   async function handleDestroyTodo(command: DestroyTodoCommand) {
-    await destroyTodoCommandHandler(command);
+    const status = await destroyTodoCommandHandler(command);
+    if (!status.success) {
+      console.error('Add todo failed:', status.errorMessage);
+    }
     const result = await selectTodosQueryHandler({});
     setSelectedTodos(result);
   }
 
   async function handleSaveTodo(command: SaveTodoCommand) {
-    await saveTodoCommandHandler(command);
+    const status = await saveTodoCommandHandler(command);
+    if (!status.success) {
+      console.error('Add todo failed:', status.errorMessage);
+    }
     const result = await selectTodosQueryHandler({});
     setSelectedTodos(result);
   }
 
   async function handleToggleAll(command: ToggleAllCommand) {
-    await toggleAllCommandHandler(command);
+    const status = await toggleAllCommandHandler(command);
+    if (!status.success) {
+      console.error('Add todo failed:', status.errorMessage);
+    }
     const result = await selectTodosQueryHandler({});
     setSelectedTodos(result);
   }
 
   async function handleToggleTodo(command: ToggleTodoCommand) {
-    await toggleTodoCommandHandler(command);
+    const status = await toggleTodoCommandHandler(command);
+    if (!status.success) {
+      console.error('Add todo failed:', status.errorMessage);
+    }
     const result = await selectTodosQueryHandler({});
     setSelectedTodos(result);
   }

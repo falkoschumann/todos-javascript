@@ -3,7 +3,7 @@ import { ClearCompletedCommand, CommandStatus, Success, Todo, TodosRepository } 
 export function createClearCompletedCommandHandler(
   todosRepository: TodosRepository
 ): (command: ClearCompletedCommand) => Promise<CommandStatus> {
-  return async () => {
+  return async (_) => {
     let todos = await todosRepository.load();
     todos = clearCompleted(todos);
     await todosRepository.store(todos);

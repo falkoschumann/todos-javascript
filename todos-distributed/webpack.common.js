@@ -53,4 +53,5 @@ module.exports = {
       fs: false,
     },
   },
+  externals: ['fs/promises'],
 };

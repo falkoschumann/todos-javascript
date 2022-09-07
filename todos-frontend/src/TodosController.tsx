@@ -79,7 +79,12 @@ export function TodosController({
 
   return (
     <section className="max-w-3xl mx-auto">
-      <Header isAllCompleted={isAllCompleted} addTodo={handleAddTodo} toggleAll={handleToggleAll} />
+      <Header
+        existsTodos={existsTodos}
+        isAllCompleted={isAllCompleted}
+        addTodo={handleAddTodo}
+        toggleAll={handleToggleAll}
+      />
       {existsTodos && (
         <>
           <main className="p-4 sm:p-6">
