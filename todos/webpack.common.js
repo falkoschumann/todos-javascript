@@ -18,6 +18,7 @@ module.exports = {
   ],
   output: {
     filename: 'static/js/[name].[contenthash:8].js',
+    assetModuleFilename: 'static/assets/[contenthash:8][ext]',
     path: path.resolve(__dirname, 'dist'),
     clean: true,
   },

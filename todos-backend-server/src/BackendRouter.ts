@@ -39,8 +39,11 @@ export function createBackendRouter({
       res.json(status);
     } catch (err) {
       console.error('add todo failed:', req.body, err);
-      const error = err as Error;
-      res.json(new Failure(`Could not add todo. ${error.message}`));
+      let errorMessage = 'Could not add todo.';
+      if (err instanceof Error) {
+        errorMessage += ' ' + err.message;
+      }
+      res.json(new Failure(errorMessage));
     }
   });
   router.post('/clear-completed', async (req, res) => {
@@ -50,9 +53,11 @@ export function createBackendRouter({
       const status = await clearCompletedCommandHandler(req.body);
       res.json(status);
     } catch (err) {
-      console.error('clear completed failed:', req.body, err);
-      const error = err as Error;
-      res.json(new Failure(`Could not clear completed. ${error.message}`));
+      let errorMessage = 'Could not clear completed.';
+      if (err instanceof Error) {
+        errorMessage += ' ' + err.message;
+      }
+      res.json(new Failure(errorMessage));
     }
   });
   router.post('/destroy-todo', async (req, res) => {
@@ -63,8 +68,11 @@ export function createBackendRouter({
       res.json(status);
     } catch (err) {
       console.error('destroy todo failed:', req.body, err);
-      const error = err as Error;
-      res.json(new Failure(`Could not destroy todo. ${error.message}`));
+      let errorMessage = 'Could not destroy todo.';
+      if (err instanceof Error) {
+        errorMessage += ' ' + err.message;
+      }
+      res.json(new Failure(errorMessage));
     }
   });
   router.post('/save-todo', async (req, res) => {
@@ -75,8 +83,11 @@ export function createBackendRouter({
       res.json(status);
     } catch (err) {
       console.error('save todo failed:', req.body, err);
-      const error = err as Error;
-      res.json(new Failure(`Could not save todo. ${error.message}`));
+      let errorMessage = 'Could not save todo.';
+      if (err instanceof Error) {
+        errorMessage += ' ' + err.message;
+      }
+      res.json(new Failure(errorMessage));
     }
   });
   router.get('/select-todos', async (req, res) => {
@@ -97,8 +108,11 @@ export function createBackendRouter({
       res.json(status);
     } catch (err) {
       console.error('toggle all failed:', req.body, err);
-      const error = err as Error;
-      res.json(new Failure(`Could not toggle all. ${error.message}`));
+      let errorMessage = 'Could not toggle all.';
+      if (err instanceof Error) {
+        errorMessage += ' ' + err.message;
+      }
+      res.json(new Failure(errorMessage));
     }
   });
   router.post('/toggle-todo', async (req, res) => {
@@ -109,8 +123,11 @@ export function createBackendRouter({
       res.json(status);
     } catch (err) {
       console.error('toggle todo failed:', req.body, err);
-      const error = err as Error;
-      res.json(new Failure(`Could not toggle todo. ${error.message}`));
+      let errorMessage = 'Could not toggle todo.';
+      if (err instanceof Error) {
+        errorMessage += ' ' + err.message;
+      }
+      res.json(new Failure(errorMessage));
     }
   });
   return router;
@@ -123,44 +140,40 @@ function verifyContentType(req: Request) {
   }
 }
 
-/* eslint-disable @typescript-eslint/no-explicit-any */
-
-function verifyAddTodoCommand(message: any) {
+function verifyAddTodoCommand(message: Record<string, unknown>) {
   verifyProperty(message, 'title', 'string');
 }
 
-function verifyClearCompletedCommand(_: any) {
+function verifyClearCompletedCommand(_: Record<string, unknown>) {
   // command is empty
 }
 
-function verifyDestroyTodoCommand(message: any) {
+function verifyDestroyTodoCommand(message: Record<string, unknown>) {
   verifyProperty(message, 'id', 'number');
 }
 
-function verifySaveTodoCommand(message: any) {
+function verifySaveTodoCommand(message: Record<string, unknown>) {
   verifyProperty(message, 'id', 'number');
   verifyProperty(message, 'title', 'string');
 }
 
-function verifyTodosSelectQuery(_: any) {
+function verifyTodosSelectQuery(_: Record<string, unknown>) {
   // command is empty
 }
 
-function verifyToggleAllCommand(message: any) {
+function verifyToggleAllCommand(message: Record<string, unknown>) {
   verifyProperty(message, 'checked', 'boolean');
 }
 
-function verifyToggleTodoCommand(message: any) {
+function verifyToggleTodoCommand(message: Record<string, unknown>) {
   verifyProperty(message, 'id', 'number');
 }
 
-function verifyProperty(message: any, name: string, type: string) {
-  if (message[name] == null) {
+function verifyProperty(message: Record<string, unknown>, name: string, type: string) {
+  if (message.name == null) {
     throw Error(`Message must have property ${name}.`);
   }
-  if (typeof message[name] !== type) {
+  if (typeof message.name !== type) {
     throw Error(`Property ${name} of message must be of type ${type}.`);
   }
 }
-
-/* eslint-enable @typescript-eslint/no-explicit-any */

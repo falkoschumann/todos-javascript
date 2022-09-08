@@ -3,8 +3,6 @@ import classNames from 'classnames';
 
 import { Todo } from 'todos-contract';
 
-import { DestroyIcon } from './DestroyIcon';
-
 type TodoItemProps = Readonly<{
   todo: Todo;
   editing: boolean;
@@ -68,7 +66,7 @@ function View({ todo, onDestroy, onEdit, onToggle }: ViewProps) {
           onClick={handleDestroy}
           className="hidden group-hover:block text-blue-700 border border-blue-700 hover:bg-blue-700 hover:text-white focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm p-1 text-center inline-flex items-center mr-2 dark:border-blue-500 dark:text-blue-500 dark:hover:text-white dark:focus:ring-blue-800"
         >
-          <DestroyIcon />
+          <span className="material-icons-outlined block">close</span>
           <span className="sr-only">remove</span>
         </button>
       </div>

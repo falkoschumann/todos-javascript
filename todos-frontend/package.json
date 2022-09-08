@@ -4,19 +4,22 @@
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
-    "build": "npm run compile && npm run tailwindcss",
+    "build": "npm run compile && npm run postcss",
     "clean": "rm -rf dist",
-    "watch": "concurrently \"npm run compile:watch\" \"npm run tailwindcss:watch\"",
+    "watch": "concurrently \"npm run compile:watch\" \"npm run postcss:watch\"",
     "test": "TS_NODE_PROJECT=./tsconfig-test.json mocha --require ts-node/register src/**/*.test.ts",
     "compile": "tsc",
     "compile:watch": "tsc --watch",
     "tailwindcss": "tailwindcss -i ./src/style.css -o ./dist/style.css --minify",
-    "tailwindcss:watch": "tailwindcss -i ./src/style.css -o ./dist/style.css --watch"
+    "tailwindcss:watch": "tailwindcss -i ./src/style.css -o ./dist/style.css --watch",
+    "postcss": "postcss ./src/style.css -o ./dist/style.css",
+    "postcss:watch": "postcss ./src/style.css -o ./dist/style.css --watch"
   },
   "dependencies": {
     "@types/react": "^18.0.18",
     "@types/react-dom": "^18.0.6",
     "classnames": "^2.3.1",
+    "material-icons": "^1.11.11",
     "react": "^18.2.0",
     "react-router-dom": "^6.3.0",
     "todos-contract": "^1.0.0"
@@ -25,9 +28,12 @@
     "@tailwindcss/forms": "^0.5.3",
     "@types/chai": "^4.3.3",
     "@types/mocha": "^9.1.1",
+    "autoprefixer": "^10.4.8",
     "chai": "^4.3.6",
     "concurrently": "^7.3.0",
     "mocha": "^10.0.0",
+    "postcss": "^8.4.16",
+    "postcss-cli": "^10.0.0",
     "tailwindcss": "^3.1.8",
     "ts-node": "^10.9.1",
     "typescript": "^4.8.2"
