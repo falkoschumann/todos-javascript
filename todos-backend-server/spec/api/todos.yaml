@@ -1,0 +1,192 @@
+openapi: 3.0.3
+info:
+  title: Todos API
+  version: 1.0.0
+servers:
+  - url: http://localhost:3000/api
+paths:
+  /add-todo:
+    post:
+      description: Add a todo to the list.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              properties:
+                title:
+                  type: string
+                  example: Taste JavaScript
+        required: true
+      responses:
+        '200':
+          description: Todo added successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/success'
+        '400':
+          description: Adding todo failed.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/failure'
+  /clear-completed:
+    post:
+      description: Remove completed todos from the list.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              example: {}
+        required: true
+      responses:
+        '200':
+          description: Cleared completed successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/success'
+        '400':
+          description: Clearing completed failed.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/failure'
+  /destroy-todo:
+    post:
+      description: Remove a todo from the list.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              properties:
+                id:
+                  type: number
+                  example: 1
+        required: true
+      responses:
+        '200':
+          description: Todo destroyed successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/success'
+        '400':
+          description: Destroying todo failed.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/failure'
+  /save-todo:
+    post:
+      description: Update a todo in the list.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              properties:
+                id:
+                  type: number
+                  example: 1
+                title:
+                  type: string
+                  example: Taste TypeScript
+        required: true
+      responses:
+        '200':
+          description: Todo saved successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/success'
+        '400':
+          description: Saving todo failed.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/failure'
+  /toggle-all:
+    post:
+      description: Set all todos in the list to active or completed.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              properties:
+                checked:
+                  type: boolean
+        required: true
+      responses:
+        '200':
+          description: Todo added successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/success'
+        '400':
+          description: Adding todo failed.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/failure'
+  /toggle-todo:
+    post:
+      description: Set a todo in the list active or completed.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              properties:
+                id:
+                  type: number
+                  example: 1
+        required: true
+      responses:
+        '200':
+          description: Todo toggled successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/success'
+        '400':
+          description: Toggling todo failed.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/failure'
+  /select-todos:
+    get:
+      description: Retrieves todos.
+      responses:
+        '200':
+          description: The list of todos.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: number
+                    title:
+                      type: string
+                    completed:
+                      type: boolean
+components:
+  schemas:
+    success:
+      properties:
+        success:
+          description: Always true.
+          type: boolean
+          example: true
+    failure:
+      properties:
+        success:
+          description: Always false.
+          type: boolean
+          example: false
+        errorMessage:
+          type: string
+          example: Something is strange.

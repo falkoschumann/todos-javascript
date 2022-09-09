@@ -1,5 +1,6 @@
 import bodyParser from 'body-parser';
 import express from 'express';
+import path from 'path';
 
 import {
   createAddTodoCommandHandler,
@@ -20,6 +21,7 @@ const app = express();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static('public'));
+app.use(express.static('spec'));
 
 const todosRepository = new FileTodosRepository('todos.json');
 const addTodoCommandHandler = createAddTodoCommandHandler(todosRepository);
@@ -39,6 +41,9 @@ const backendRouter = createBackendRouter({
   selectTodosQueryHandler,
 });
 app.use('/api', backendRouter);
+app.get('/*', (req, res) => {
+  res.sendFile(path.join(__dirname, '../public', 'index.html'));
+});
 
 app.listen(port, () => {
   console.log(`Todos backend server listening on port ${port}`);

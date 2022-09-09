@@ -43,7 +43,7 @@ export function createBackendRouter({
       if (err instanceof Error) {
         errorMessage += ' ' + err.message;
       }
-      res.json(new Failure(errorMessage));
+      res.status(400).json(new Failure(errorMessage));
     }
   });
   router.post('/clear-completed', async (req, res) => {
@@ -57,7 +57,7 @@ export function createBackendRouter({
       if (err instanceof Error) {
         errorMessage += ' ' + err.message;
       }
-      res.json(new Failure(errorMessage));
+      res.status(400).json(new Failure(errorMessage));
     }
   });
   router.post('/destroy-todo', async (req, res) => {
@@ -72,7 +72,7 @@ export function createBackendRouter({
       if (err instanceof Error) {
         errorMessage += ' ' + err.message;
       }
-      res.json(new Failure(errorMessage));
+      res.status(400).json(new Failure(errorMessage));
     }
   });
   router.post('/save-todo', async (req, res) => {
@@ -87,7 +87,7 @@ export function createBackendRouter({
       if (err instanceof Error) {
         errorMessage += ' ' + err.message;
       }
-      res.json(new Failure(errorMessage));
+      res.status(400).json(new Failure(errorMessage));
     }
   });
   router.get('/select-todos', async (req, res) => {
@@ -112,7 +112,7 @@ export function createBackendRouter({
       if (err instanceof Error) {
         errorMessage += ' ' + err.message;
       }
-      res.json(new Failure(errorMessage));
+      res.status(400).json(new Failure(errorMessage));
     }
   });
   router.post('/toggle-todo', async (req, res) => {
@@ -127,7 +127,7 @@ export function createBackendRouter({
       if (err instanceof Error) {
         errorMessage += ' ' + err.message;
       }
-      res.json(new Failure(errorMessage));
+      res.status(400).json(new Failure(errorMessage));
     }
   });
   return router;
@@ -170,10 +170,10 @@ function verifyToggleTodoCommand(message: Record<string, unknown>) {
 }
 
 function verifyProperty(message: Record<string, unknown>, name: string, type: string) {
-  if (message.name == null) {
+  if (message[name] == null) {
     throw Error(`Message must have property ${name}.`);
   }
-  if (typeof message.name !== type) {
+  if (typeof message[name] !== type) {
     throw Error(`Property ${name} of message must be of type ${type}.`);
   }
 }
