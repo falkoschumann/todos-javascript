@@ -1,7 +1,7 @@
-import { CommandStatus } from './CommandStatus';
+import { CommandHandler } from './MessageHandler';
 
 export interface AddTodoCommand {
   readonly title: string;
 }
 
-export type AddTodoCommandHandler = (command: AddTodoCommand) => Promise<CommandStatus>;
+export type AddTodoCommandHandler = CommandHandler<AddTodoCommand>;

@@ -1,8 +1,8 @@
-import { CommandStatus } from './CommandStatus';
+import { CommandHandler } from './MessageHandler';
 import { TodoId } from '../data/Todo';
 
 export interface ToggleTodoCommand {
   readonly id: TodoId;
 }
 
-export type ToggleTodoCommandHandler = (command: ToggleTodoCommand) => Promise<CommandStatus>;
+export type ToggleTodoCommandHandler = CommandHandler<ToggleTodoCommand>;

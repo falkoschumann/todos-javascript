@@ -1,4 +1,4 @@
-import { CommandStatus } from './CommandStatus';
+import { CommandHandler } from './MessageHandler';
 import { TodoId } from '../data/Todo';
 
 export interface SaveTodoCommand {
@@ -6,4 +6,4 @@ export interface SaveTodoCommand {
   readonly title: string;
 }
 
-export type SaveTodoCommandHandler = (command: SaveTodoCommand) => Promise<CommandStatus>;
+export type SaveTodoCommandHandler = CommandHandler<SaveTodoCommand>;

@@ -1,7 +1,7 @@
-import { CommandStatus } from './CommandStatus';
+import { CommandHandler } from './MessageHandler';
 
 export interface ToggleAllCommand {
   readonly checked: boolean;
 }
 
-export type ToggleAllCommandHandler = (command: ToggleAllCommand) => Promise<CommandStatus>;
+export type ToggleAllCommandHandler = CommandHandler<ToggleAllCommand>;
