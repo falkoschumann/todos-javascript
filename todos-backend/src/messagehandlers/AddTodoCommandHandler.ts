@@ -17,15 +17,10 @@ export function createAddTodoCommandHandler(
   };
 }
 
-function nextId(todos: readonly Todo[]): number {
-  return (
-    todos
-      .map((todo) => todo.id)
-      .reduce((previousValue, currentValue) => (previousValue > currentValue ? previousValue : currentValue), 0) + 1
-  );
-}
-
 function addTodo(todos: readonly Todo[], title: string): readonly Todo[] {
-  const id = nextId(todos);
+  let id = todos
+    .map((todo) => todo.id)
+    .reduce((previousValue, currentValue) => (previousValue > currentValue ? previousValue : currentValue), 0);
+  id++;
   return [...todos, { id, title, completed: false }];
 }
