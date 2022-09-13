@@ -23,13 +23,13 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/success'
+                $ref: '#/components/schemas/Success'
         '400':
           description: Adding todo failed.
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/failure'
+                $ref: '#/components/schemas/Failure'
   /clear-completed:
     post:
       description: Remove completed todos from the list.
@@ -45,13 +45,13 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/success'
+                $ref: '#/components/schemas/Success'
         '400':
           description: Clearing completed failed.
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/failure'
+                $ref: '#/components/schemas/Failure'
   /destroy-todo:
     post:
       description: Remove a todo from the list.
@@ -70,13 +70,13 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/success'
+                $ref: '#/components/schemas/Success'
         '400':
           description: Destroying todo failed.
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/failure'
+                $ref: '#/components/schemas/Failure'
   /save-todo:
     post:
       description: Update a todo in the list.
@@ -98,13 +98,13 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/success'
+                $ref: '#/components/schemas/Success'
         '400':
           description: Saving todo failed.
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/failure'
+                $ref: '#/components/schemas/Failure'
   /toggle-all:
     post:
       description: Set all todos in the list to active or completed.
@@ -122,13 +122,13 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/success'
+                $ref: '#/components/schemas/Success'
         '400':
           description: Adding todo failed.
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/failure'
+                $ref: '#/components/schemas/Failure'
   /toggle-todo:
     post:
       description: Set a todo in the list active or completed.
@@ -147,13 +147,13 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/success'
+                $ref: '#/components/schemas/Success'
         '400':
           description: Toggling todo failed.
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/failure'
+                $ref: '#/components/schemas/Failure'
   /select-todos:
     get:
       description: Retrieves todos.
@@ -175,13 +175,13 @@ paths:
                       type: boolean
 components:
   schemas:
-    success:
+    Success:
       properties:
         success:
           description: Always true.
           type: boolean
           example: true
-    failure:
+    Failure:
       properties:
         success:
           description: Always false.
