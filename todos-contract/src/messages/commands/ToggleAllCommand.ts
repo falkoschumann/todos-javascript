@@ -1,4 +1,4 @@
-import { CommandHandler } from './MessageHandler';
+import { CommandHandler } from '../MessageHandler';
 
 export interface ToggleAllCommand {
   readonly checked: boolean;

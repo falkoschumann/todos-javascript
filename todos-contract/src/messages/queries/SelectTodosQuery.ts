@@ -1,5 +1,5 @@
-import { QueryHandler } from './MessageHandler';
-import { Todo } from '../data/Todo';
+import { QueryHandler } from '../MessageHandler';
+import { Todo } from '../../data/Todo';
 
 // Query is empty.
 // eslint-disable-next-line @typescript-eslint/no-empty-interface

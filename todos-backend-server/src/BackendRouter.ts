@@ -1,4 +1,5 @@
 import { Request, Router } from 'express';
+import { constants } from 'http2';
 
 import {
   AddTodoCommandHandler,
@@ -43,7 +44,7 @@ export function createBackendRouter({
       if (err instanceof Error) {
         errorMessage += ' ' + err.message;
       }
-      res.status(400).json(new Failure(errorMessage));
+      res.status(constants.HTTP_STATUS_BAD_REQUEST).json(new Failure(errorMessage));
     }
   });
   router.post('/clear-completed', async (req, res) => {
@@ -57,7 +58,7 @@ export function createBackendRouter({
       if (err instanceof Error) {
         errorMessage += ' ' + err.message;
       }
-      res.status(400).json(new Failure(errorMessage));
+      res.status(constants.HTTP_STATUS_BAD_REQUEST).json(new Failure(errorMessage));
     }
   });
   router.post('/destroy-todo', async (req, res) => {
@@ -72,7 +73,7 @@ export function createBackendRouter({
       if (err instanceof Error) {
         errorMessage += ' ' + err.message;
       }
-      res.status(400).json(new Failure(errorMessage));
+      res.status(constants.HTTP_STATUS_BAD_REQUEST).json(new Failure(errorMessage));
     }
   });
   router.post('/save-todo', async (req, res) => {
@@ -87,7 +88,7 @@ export function createBackendRouter({
       if (err instanceof Error) {
         errorMessage += ' ' + err.message;
       }
-      res.status(400).json(new Failure(errorMessage));
+      res.status(constants.HTTP_STATUS_BAD_REQUEST).json(new Failure(errorMessage));
     }
   });
   router.get('/select-todos', async (req, res) => {
@@ -112,7 +113,7 @@ export function createBackendRouter({
       if (err instanceof Error) {
         errorMessage += ' ' + err.message;
       }
-      res.status(400).json(new Failure(errorMessage));
+      res.status(constants.HTTP_STATUS_BAD_REQUEST).json(new Failure(errorMessage));
     }
   });
   router.post('/toggle-todo', async (req, res) => {
@@ -127,7 +128,7 @@ export function createBackendRouter({
       if (err instanceof Error) {
         errorMessage += ' ' + err.message;
       }
-      res.status(400).json(new Failure(errorMessage));
+      res.status(constants.HTTP_STATUS_BAD_REQUEST).json(new Failure(errorMessage));
     }
   });
   return router;
